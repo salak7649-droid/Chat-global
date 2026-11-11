@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#075e54">
+  <title>Massage Global — Chat bersama</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div id="auth-view" class="auth-shell">
+    <section class="auth-card">
+      <div class="brand-mark">m<span>•</span></div>
+      <p class="eyebrow">TERHUBUNG TANPA BATAS</p>
+      <h1>Obrolan jadi<br><span>lebih dekat.</span></h1>
+      <p class="auth-copy">Sapa teman, temukan percakapan baru, dan tetap terhubung di mana saja.</p>
+      <form id="auth-form">
+        <label for="username">Username</label>
+        <input id="username" name="username" autocomplete="username" placeholder="contoh: ikky00" required maxlength="20">
+        <label for="password">Kata sandi</label>
+        <input id="password" name="password" type="password" autocomplete="current-password" placeholder="Minimal 8 karakter" required>
+        <p id="auth-error" class="error" aria-live="polite"></p>
+        <button id="auth-submit" class="primary-button" type="submit">Masuk ke Massage Global <span>→</span></button>
+      </form>
+      <p class="switch-auth"><span id="switch-label">Belum punya akun?</span> <button id="switch-mode" type="button">Daftar</button></p>
+      <p class="fine-print">Dengan melanjutkan, kamu menyetujui aturan komunitas kami.</p>
+    </section>
+    <aside class="auth-art"><div class="art-glow"></div><div class="quote-card"><span class="quote-icon">“</span><p>Jarak boleh memisahkan,<br>cerita selalu menemukan jalan.</p><div class="quote-bottom"><div class="avatar-stack"><i>R</i><i>A</i><i>D</i></div><span>Obrolan yang berarti, setiap hari.</span></div></div><div class="art-caption">YOUR WORLD, ONE CONVERSATION AWAY.</div></aside>
+  </div>
+  <div id="chat-view" class="app-shell hidden">
+    <aside class="sidebar">
+      <header class="side-header"><a class="brand" href="#"><span class="brand-icon">m</span><span>massage<span class="brand-light">global</span></span></a><button id="logout" class="icon-button" title="Keluar" aria-label="Keluar">↗</button></header>
+      <div class="profile"><div id="my-avatar" class="avatar">M</div><div class="profile-info"><strong id="my-name">Pengguna</strong><span><i class="online-dot"></i> Online</span></div><span id="owner-badge" class="owner-badge hidden">OWNER</span></div>
+      <div class="sidebar-title"><span>RUANG OBROLAN</span><span class="live-label"><i></i> LIVE</span></div>
+      <button id="global-room" class="room-item selected"><span class="room-icon">◎</span><span class="room-copy"><strong>Obrolan Global</strong><small>Ngobrol dengan semua orang</small></span><span class="room-arrow">›</span></button>
+      <div class="people-heading"><span>PESAN PRIBADI</span><button id="refresh-users" title="Muat ulang pengguna">↻</button></div>
+      <div id="users-list" class="users-list"></div>
+      <div class="sidebar-footer"><div class="security-icon">⌁</div><div><strong>Ruang aman</strong><small>Jaga informasi pribadimu.</small></div></div>
+    </aside>
+    <main class="chat-panel">
+      <header class="chat-header"><div class="header-room-icon">◎</div><div class="header-copy"><h2 id="chat-title">Obrolan Global</h2><p id="chat-subtitle"><i class="online-dot"></i> Tempat semua orang berkumpul</p></div><div class="header-actions"><span class="live-pill"><i></i> REAL-TIME</span><button id="info-button" class="icon-button" title="Informasi">ⓘ</button></div></header>
+      <section id="welcome-banner" class="welcome-banner"><div class="welcome-copy"><span class="sparkle">✳</span><div><strong>Selamat datang di ruang global!</strong><p>Kenalan, berbagi cerita, dan tetap ramah satu sama lain.</p></div></div><button id="dismiss-welcome" aria-label="Tutup">×</button></section>
+      <section id="messages" class="messages" aria-live="polite"><div class="date-divider"><span>AWAL PERCAKAPAN</span></div></section>
+      <div id="toast" class="toast hidden"></div>
+      <form id="composer" class="composer"><button type="button" class="composer-plus" title="Fitur media segera hadir">＋</button><input id="message-input" maxlength="2000" placeholder="Tulis pesan yang baik..." autocomplete="off" aria-label="Tulis pesan"><span id="char-count" class="char-count"></span><button class="send-button" type="submit" aria-label="Kirim pesan">↑</button></form>
+      <footer class="chat-footer">Pesanmu disimpan agar percakapan tetap tersedia. <span>Berkomunikasilah dengan baik ♡</span></footer>
+    </main>
+  </div>
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/app.js"></script>
+</body>
+</html>
