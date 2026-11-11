@@ -1,24 +1,28 @@
-# Massage Global
+# Chat Global
 
-Starter aplikasi chat global real-time dengan akun pengguna, ruang publik, dan pesan pribadi. Ini adalah MVP fondasi—belum mencakup panggilan, status, enkripsi end-to-end, atau pengiriman media.
+Aplikasi chat real-time dengan backend Node.js/Express dan klien web. Flutter mobile shell tersedia di root; klien mobile membuka instalasi web yang di-host oleh backend.
 
-## Menjalankan secara lokal
+## Menjalankan backend/web
 
 1. Pasang Node.js 20 atau lebih baru.
-2. Salin `.env.example` menjadi `.env`.
-3. Ganti `SESSION_SECRET` dengan nilai acak yang panjang dan ubah `OWNER_PASSWORD` menjadi kata sandi kuat. Nama akun owner awal adalah `ikky00`.
-4. Jalankan `npm install`, lalu `npm start`.
-5. Buka `http://localhost:3000`.
+2. Salin `.env.example` menjadi `.env`, lalu tetapkan `SESSION_SECRET` dan `OWNER_PASSWORD` yang kuat. Jangan commit `.env` atau rahasia.
+3. Jalankan `npm install` lalu `npm start`.
+4. Buka `http://localhost:3000` di browser. Untuk akses publik, deploy di domain HTTPS dan gunakan penyimpanan persisten untuk SQLite serta uploads.
 
-Akun owner dibuat otomatis saat server pertama kali dijalankan. Kata sandi disimpan sebagai hash bcrypt di database SQLite lokal (`data/chat.db`), bukan di source code. Jangan gunakan `ikky00` sebagai kata sandi pada server publik. Jangan commit `.env` atau database.
+## Flutter mobile
 
-## Fitur MVP
+Aplikasi Flutter memuat web client dari server yang kamu deploy; ia bukan konversi UI web ke widget Dart. URL server dapat dimasukkan di aplikasi, atau diberikan saat build:
 
-- Daftar akun dan masuk/keluar dengan sesi cookie HTTP-only.
-- Ruang obrolan global real-time.
-- Pesan pribadi real-time antar pengguna.
-- Riwayat pesan disimpan di SQLite.
-- Daftar pengguna aktif dan status online.
-- Panel owner dasar dan pembatasan laju endpoint autentikasi.
+```sh
+flutter create --platforms=android,ios .
+flutter pub get
+flutter run --dart-define=CHAT_SERVER_URL=https://domain-server-kamu
+```
 
-Untuk deployment publik, gunakan HTTPS, rahasia kuat, backup database, kebijakan privasi, moderasi/laporan pengguna, dan layanan session store yang sesuai skala. Pesan saat ini disimpan di server dan **tidak** dienkripsi end-to-end.
+Untuk Android emulator, server lokal komputer host biasanya dapat diakses melalui `http://10.0.2.2:3000` (hanya untuk pengembangan). Di perangkat fisik, gunakan alamat LAN komputer atau server HTTPS yang dapat dijangkau perangkat.
+
+Fitur chat yang sudah tersedia pada web client bekerja melalui server yang sama. Media upload dan panggilan suara/video memerlukan backend/frontend yang mendukungnya, HTTPS pada deployment publik, izin kamera/mikrofon native, dan pengujian pada perangkat target. WebView wrapper ini belum menambahkan handler izin native khusus untuk kamera/mikrofon; jangan anggap panggilan sudah siap produksi sebelum pengujian tersebut.
+
+## Catatan deployment
+
+Gunakan HTTPS, kredensial kuat, backup database, kebijakan privasi dan moderasi, serta hosting yang mendukung WebSocket dan penyimpanan persisten. Jangan pernah menyimpan `.env`, kata sandi, atau secret di repository.
